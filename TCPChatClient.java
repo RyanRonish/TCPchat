@@ -4,7 +4,7 @@ import java.net.*;
 public class TCPChatClient {
     //default server addy
     private static final String default_host = "localhost"; // 127.0.0.1
-    private static final int default_port = 5000;    // random port # use java TCPChatClient 127.0.0.1 6000 if 5000 doesn't work
+    private static final int default_port = 5000;    // random port # use java TCPChatClient 127.0.0.1 <any port number> if 5000 doesn't work
 
     public static void main(String[] args) {
         String host = default_host;
