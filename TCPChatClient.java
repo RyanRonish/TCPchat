@@ -22,10 +22,10 @@ public class TCPChatClient {
             }
         }
 
-        try (Socket socket = new Socket(host, port);  // connects to the server
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true); // output stream
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // input stream
-             BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in))) {  // usre input is read
+        try (Socket socks = new Socket(host, port);  // connects to the server
+             PrintWriter output = new PrintWriter(socks.getOutputStream(), true); // output stream
+             BufferedReader input = new BufferedReader(new InputStreamReader(socks.getInputStream())); // input stream
+             BufferedReader user_text = new BufferedReader(new InputStreamReader(System.in))) {  // usre input is read
 
             System.out.println("Connected to chat server at " + host + ":" + port);
 
@@ -33,7 +33,7 @@ public class TCPChatClient {
             Thread incoming_messages = new Thread(() -> {
                 String message_to_server;
                 try {
-                    while ((message_to_server = in.readLine()) != null) { // reads messages from server
+                    while ((message_to_server = input.readLine()) != null) { // reads messages from server
                         System.out.println("\n" + message_to_server);
                         System.out.print("> "); // prompts user for input
                     }
@@ -45,13 +45,13 @@ public class TCPChatClient {
 
             // Main loop to send user messages
             String users_message;
-            while ((users_message = userInput.readLine()) != null) {
-                out.println(users_message);
+            while ((users_message = user_text.readLine()) != null) {
+                output.println(users_message);
                 System.out.print("> "); // prompt format
             }
 
         } catch (IOException e) {
-            System.err.println("Error connecting to server: " + e.getMessage());
+            System.err.println("Error connecting: " + e.getMessage());
         }
     }
 }
